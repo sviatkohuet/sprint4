@@ -1,3 +1,6 @@
+"""Main module for the game"""
+
+
 import game_ukraine
 
 
@@ -114,28 +117,26 @@ while lives > 0 and win == False:
                 print(inhabitant.name+' під час розмови запхав тобі в кишеню аптечку')
     elif command == "битися":
         if inhabitant is not None and current_room.type == 'frontline':
-            # Fight with the inhabitant, if there is one
+
             print("з чим ти будеш битись?")
             print('ось твій рюкзак '+ f'{backpack}')
             fight_with = input()
 
-            # Do I have this item?
             if fight_with in backpack:
 
                 if inhabitant.fight(fight_with) == True:
-                    # What happens if you win?
                     print(f"Молодець, ти знищив ворога")
                     current_room.character = None
                     if inhabitant.get_defeated() == 4:
 
                         print("Вітаю, ти звільнив більшу частину України,\nЗалишився тільки Крим!")
                         print('Зараз тобі доведеться зустрітись з босом та звільнити півострів')
-                        putin = game_ukraine.Putin('вЛАДМІР ПІТУН', 'великий полководець і політик в своїх снах')
+                        putin = game_ukraine.Putin('вЛАДМІР ПІТУН',\
+                                                    'великий полководець і політик в своїх снах')
                         crimea = game_ukraine.Crimea('Крим')
                         crimea.set_character(putin)
                         current_room = crimea
                         crimea.get_details()
-                        
                         command = input("> Введи число від 1 до 5 ")
                         if putin.fight(int(command)) == True:
                             win = True
@@ -146,7 +147,7 @@ while lives > 0 and win == False:
                             if lives == 0:
                                 print('Ти програв путіну, добре, що це лише гра')
                 else:
-                    # What happens if you lose?
+
                     lives -= 1
                     if lives > 0:
                         print("Ти програв битву, але не війну!")

@@ -1,8 +1,12 @@
+"""Game Ukraine module"""
+
 import random
 
 class Region:
+    """Base class for all regions"""
 
     def __init__(self, name):
+        """Initializes the region"""
         self.name = name
         self.description = None
         self.linked_regions = {}
@@ -15,7 +19,7 @@ class Region:
         res += self.name+'\n'
         res += '--------------------\n'
         for key in self.linked_regions.keys():
-            res += f'The {self.linked_regions[key].name} на {key}\n'
+            res += f'{self.linked_regions[key].name} на {key}\n'
         res += f'\n{self.character.name} тут!\n{self.character.describe()}\n'\
               if self.character is not None else ''
         res += f'[{self.item.get_name()}] тут!'\
@@ -44,8 +48,10 @@ class Region:
 
 
 class PeacefulRegion(Region):
+    """Class for peaceful regions"""
 
     def __init__(self, name):
+        """Initializes the peaceful region"""
         super().__init__(name)
         self.type = 'peaceful'
         self.linked_rooms = {}
@@ -59,11 +65,13 @@ class PeacefulRegion(Region):
     def get_item(self):
         """Returns the item in the room"""
         return self.item
-        
+
 
 class FrontLineRegion(Region):
+    """Class for front line regions"""
 
     def __init__(self, name):
+        """Initializes the front line region"""
         super().__init__(name)
         self.type = 'frontline'
         self.linked_rooms = {}
@@ -71,8 +79,10 @@ class FrontLineRegion(Region):
 
 
 class Crimea(FrontLineRegion):
+    """Class for Crimea region"""
 
     def __init__(self, name):
+        """Initializes the Crimea region"""
         super().__init__(name)
         self.character = None
 
@@ -88,8 +98,10 @@ class Crimea(FrontLineRegion):
         print(res.strip())
 
 class Character:
+    """Base class for all characters"""
 
     def __init__(self, name, description):
+        """Initializes the character"""
         self.name = name
         self.description = description
 
@@ -100,9 +112,11 @@ class Character:
 
 
 class Enemy(Character):
+    """Enemy class"""
     defeats = 0
 
     def __init__(self, name, description):
+        """Enemy constructor"""
         super().__init__(name, description)
         self.weakness = None
 
@@ -127,8 +141,10 @@ class Enemy(Character):
 
 
 class Putin(Enemy):
+    """Putin class"""
 
     def __init__(self, name, description):
+        """Putin constructor"""
         super().__init__(name, description)
         self.name = name
         self.description = description
@@ -141,18 +157,23 @@ class Putin(Enemy):
 
 
 class Friend(Character):
+    """Friend class"""
 
     def __init__(self, name, description):
+        """Friend constructor"""
         super().__init__(name, description)
         self.item = None
 
     def set_item(self, item):
+        """Sets the item for the friend"""
         self.item = item
 
     def talk(self):
+        """Talks to the friend"""
         print(f'Привіт мене звати {self.name}')
 
     def give_item(self):
+        """Gives the item to the player"""
         return self.item
 
 
@@ -178,17 +199,19 @@ class Item:
 
 
 class HealItem(Item):
+    """Heal item class"""
 
     def __init__(self, name):
+        """Heal item constructor"""
         super().__init__(name)
         self.description = None
 
-    def heal(self):
-        pass
 
 
 class Weapon(Item):
+    """Weapon class"""
 
     def __init__(self, name):
+        """Weapon constructor"""
         super().__init__(name)
 
